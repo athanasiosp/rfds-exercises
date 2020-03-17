@@ -11,13 +11,13 @@ estimate_pi <- function(n){
     inside_circle <- length(which(positions == 1))
     
     return(4*inside_circle / n)
-    
 }
 
 
 xp <- vector(mode = "integer", length = 0)
 pi_points <- vector(mode = "numeric", length = 0)
 
+# first way of running the simulation with for loop
 for (i in seq(100,10000,100)) {
     
     xp <- append(xp, i)
@@ -28,7 +28,15 @@ for (i in seq(100,10000,100)) {
 }
 
 
-data %>% ggplot(aes(x = xp, y =  pi_points)) + 
+# second way of running the simulation with vector operations
+xp <- seq(100,10000,100)
+
+pi_points <- sapply(xp, estimate_pi)
+
+# visualizing the output
+tibble(xp, pi_points) %>%   
+
+    ggplot(aes(x = xp, y = pi_points)) + 
     geom_point(color = "blue") + 
     geom_line(color = "blue") + 
     geom_hline(aes(yintercept = 3.1415), color = "red")
