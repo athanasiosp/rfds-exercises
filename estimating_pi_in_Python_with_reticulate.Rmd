@@ -1,0 +1,38 @@
+---
+title: "Estimating Pi in Python within R"
+author: "Athanasios Pliousis"
+date: "22/3/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+#use_python()
+```
+
+## Writing the function in Python
+
+
+```{python}
+import numpy as np
+import time
+#Calculating pi with a uniform random number between 0-1 with vectoring
+def estimate_pi_2(n):
+    x = np.random.uniform(0,1,n)
+    y = np.random.uniform(0,1,n)
+    distance = x**2 + y**2
+    inside_circle = np.count_nonzero(distance <= 1)
+    return 4*inside_circle / n
+```
+
+## Timing the function
+
+```{python}
+np.random.seed(1234)
+start = time.process_time()
+print(estimate_pi_2(10000000))
+print(time.process_time()-start)
+```
+
